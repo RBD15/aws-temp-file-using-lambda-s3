@@ -3,7 +3,7 @@
 ## Steps
 
 1. Clone Project into local machine
-> git clone Project Url
+> git clone https://github.com/RBD15/aws-temp-file-using-lambda-s3.git
 2. Into new folder
 3. Install Node dependencies
 > npm i
