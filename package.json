@@ -1,0 +1,16 @@
+{
+  "name": "aws-lambda-template",
+  "version": "1.0.0",
+  "description": "AWS Lambda Template using Node to Upload Files to S3 Standard with serverless Framework",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1574.0",
+    "moment": "^2.30.1",
+    "serverless": "^3.21.0"
+  }
+}

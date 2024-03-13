@@ -1,0 +1,60 @@
+service: alo-upload-temp-file
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 's3:*'
+          Resource: arn:aws:s3:::name-for-my-s3-YYYY-MM-DD/*
+  environment:
+    BUCKET: name-for-my-s3-YYYY-MM-DD 
+
+package:
+  individually: true
+  patterns:
+    - "!node_modules"
+    - "node_modules/moment/**"
+
+functions:
+  getUrlToSignFile:
+    handler: getTempFileUrl/handler.getUrlToSignFile
+    events:
+      - http:
+          path: operation/get-url-to-upload-file/{filename}
+          method: GET
+          request:
+            parameters:
+              paths:
+                filename: true
+resources:
+  Resources:
+    S3Bucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+        BucketName: name-for-my-s3-YYYY-MM-DD
+      SampleBucketPolicy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+          Bucket: !Ref S3Bucket
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Action:
+                  - 's3:GetObject'
+                Effect: Allow
+                Resource: !Join
+                  - ''
+                  - - 'arn:aws:s3:::'
+                    - !Ref S3Bucket
+                    - /*
+                Principal: '*'
+
+
+
+
